@@ -124,7 +124,6 @@ Now, you should be able to see the site running locally at [http://localhost:300
 - ✅ **Auth**: [Next-Auth.js](https://next-auth.js.org)
 - ✅ **Database**: [MongoDB](https://www.mongodb.com).
 - ✅ **Styling**: [Styled Components](https://styled-components.com).
-- ✅ **Schema Validation**: [Zod](https://github.com/colinhacks/zod).
 - ✅ **Maps**: [Google Maps API](https://developers.google.com/maps) + [DeckGL](https://deck.gl).
 
 ## 📷 Screenshots
