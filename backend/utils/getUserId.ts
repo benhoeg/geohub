@@ -8,5 +8,5 @@ const getUserId = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return session.user.id
 }
-
+// hi
 export default getUserId
