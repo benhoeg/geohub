@@ -1,6 +1,21 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from 'next'
 import crypto from 'crypto'
+import type { Readable } from 'node:stream'
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
+async function buffer(readable: Readable) {
+  const chunks = []
+  for await (const chunk of readable) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
+  }
+  return Buffer.concat(chunks)
+}
 
 function verifyWebhookSignature(payload: any, signature: string) {
   const secret = process.env.BMC_SECRET ?? ''
@@ -13,7 +28,10 @@ function verifyWebhookSignature(payload: any, signature: string) {
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const sig = req.headers['x-signature-sha256'] as string
-  const isSignatureValid = verifyWebhookSignature(req.body, sig)
+  const buf = await buffer(req)
+  const rawBody = buf.toString('utf8')
+
+  const isSignatureValid = verifyWebhookSignature(buf, sig)
 
   console.log(isSignatureValid)
 
