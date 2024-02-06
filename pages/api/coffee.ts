@@ -29,7 +29,11 @@ const verifyWebhookSignature = (payload: string, signature: string) => {
   return crypto.timingSafeEqual(Buffer.from(calculatedSignature), Buffer.from(signature))
 }
 
-const getUserIdFromNote = (note: string) => {
+const getUserIdFromNote = (note: string | null) => {
+  if (!note) {
+    return false
+  }
+
   const objectIdRegex = /[0-9a-fA-F]{24}/
   const match = note.match(objectIdRegex)
 
