@@ -31,7 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const buf = await buffer(req)
   const rawBody = buf.toString('utf8')
 
-  const isSignatureValid = verifyWebhookSignature(buf, sig)
+  const isSignatureValid = verifyWebhookSignature(rawBody, sig)
 
   console.log(isSignatureValid)
 
