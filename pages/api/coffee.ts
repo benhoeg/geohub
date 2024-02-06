@@ -20,8 +20,13 @@ async function buffer(readable: Readable) {
 function verifyWebhookSignature(payload: any, signature: string) {
   const secret = process.env.BMC_SECRET ?? ''
 
+  console.log(secret)
+  console.log(signature)
+
   const hmac = crypto.createHmac('sha256', secret)
   const calculatedSignature = 'sha256=' + hmac.update(payload).digest('hex')
+
+  console.log(calculatedSignature)
 
   return crypto.timingSafeEqual(Buffer.from(calculatedSignature), Buffer.from(signature))
 }
