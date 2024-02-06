@@ -45,6 +45,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const buf = await buffer(req)
   const rawBody = buf.toString('utf8')
 
+  const body = JSON.parse(rawBody)
+
   const isSignatureValid = verifyWebhookSignature(rawBody, signature)
 
   if (!isSignatureValid) {
@@ -54,8 +56,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   await dbConnect()
 
   console.log(req.body)
+  console.log(body)
 
-  const { type, data } = req.body
+  const { type, data } = body
 
   if (type !== 'donation.created' || !data) {
     return throwError(res, 403, 'Invalid request')
